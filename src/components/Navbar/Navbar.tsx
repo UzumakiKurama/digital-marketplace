@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Icons } from '../Icons/Icons';
 import NavItems from './NavItems';
 import { buttonVariants } from '../ui/button';
+import Cart from '../Cart/Cart';
 
 const Navbar = () => {
 
@@ -62,7 +63,7 @@ const Navbar = () => {
                       }
 
                       <div className="ml-4 flow-root lg:ml-6">
-                        
+                        <Cart />
                       </div>
                     </div>
                   </div>
