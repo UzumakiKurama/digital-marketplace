@@ -15,10 +15,22 @@ import { toast } from 'sonner';
 import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { ZodError } from 'zod';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const Page = () => {
 
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const isSeller = searchParams.get("as") === "seller";
+  const origin = searchParams.get("origin");
+
+  const continueAsSeller = () => {
+    router.push("?as=seller");
+  }
+
+  const continueAsBuyer = () => {
+    router.replace("sign-in", undefined)
+  }
   const {
     register,
     handleSubmit,
@@ -27,43 +39,37 @@ const Page = () => {
     resolver : zodResolver(AuthCredentialsValidator)
   });
 
-  const router = useRouter();
 
-  const {mutate, isLoading} = trpc.auth.createPayloadUser.useMutation({
+  const {mutate : signIn, isLoading} = trpc.auth.signIn.useMutation({
+    onSuccess : () => {
+        toast.success("Signed in successfully");
+        router.refresh();
+
+        if(origin){
+            router.push(`/${origin}`);
+            return;
+        }
+
+        if(isSeller){
+            router.push("/sell");
+            return;
+        }
+
+        router.push('/');
+    },
+
     onError : (err) => {
-        if(err?.data?.code === "CONFLICT"){
-            toast.error('This email is already in use. Use sign in instead or try with diffrent email.')
-            return
+        if(err.data?.code === "UNAUTHORIZED"){
+            toast.error("Invalid email or password");
         }
-
-        if(err instanceof ZodError) {
-            toast.error(err.issues[0].message);
-            return
-        }
-
-        toast.error("Something went wrong. Please try again");
-    }, 
-
-    onSuccess : ({sentToEmail}) => {
-        toast.success(`A verification link is sent to your email ${sentToEmail}. Please click on it to verify`)
-        router.push(`/verify-email?to=${sentToEmail}`);
     }
   });
 
-  useEffect(() => {
-    if(errors.password){
-        if(errors.password){
-            toast.error(errors.password.message);
-        }
-    
-        if(errors.email){
-            toast.error(errors.email.message);
-        }
-      }
-  }, [errors]);
-
-  const onFormSubmit = ({email, password} : TAuthCredentialsValidator) => {
-    mutate({email, password})
+  const onFormSubmit = ({
+    email, 
+    password
+    } : TAuthCredentialsValidator) => {
+    signIn({email, password})
   }
 
   return (
@@ -73,16 +79,16 @@ const Page = () => {
                 <div className='flex flex-col items-center text-center space-y-2'>
                     <Icons.logo className='h-20 w-20' />
                     <h1 className='text-2xl font-bold'>
-                        Create an account
+                        Sign in to your {isSeller ? "Seller" : null} account 
                     </h1>
 
                     <Link 
-                        href="/sign-in" 
+                        href="/sign-up" 
                         className={buttonVariants({
                         variant : 'link',
                         className: "gap-1"
                     })}>
-                        Already have an account? Sign-in 
+                        Don't have an account? Sign-up
                         <ArrowRightIcon className='h-4 w-4'  />
                     </Link>
                 </div>
@@ -123,9 +129,39 @@ const Page = () => {
                                     </p>
                                 )
                             }
-                            <Button className='mt-4'>Sign up</Button>
+                            <Button className='mt-4'>Sign in</Button>
                         </div>
                     </form>
+
+                    <div className="relative">
+                        <div 
+                            aria-hidden="true" 
+                            className="absolute inset-0 flex items-center">
+                            <span className="w-full border-t" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                            <span className="bg-background px-2 text-muted-foreground">
+                                or
+                            </span>
+                        </div>
+                    </div>
+                        {
+                            isSeller ? (
+                                <Button 
+                                    onClick={continueAsBuyer}
+                                    variant="secondary"
+                                    disabled={isLoading}>
+                                    Continue as customer
+                                </Button>
+                            ) : (
+                                <Button
+                                    onClick={continueAsSeller}
+                                    variant="secondary"
+                                    disabled={isLoading}>
+                                    Continue as seller
+                                </Button>
+                            )
+                        }
                 </div>
             </div>
         </div>

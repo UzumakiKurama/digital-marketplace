@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-
-import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Providers from "@/components/Providers";
+
+import "./globals.css";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +34,8 @@ export default function RootLayout({
               </div>
             </Providers>
           </main>
+
+          <Toaster position="top-right" richColors />
       </body>
     </html>
   );
