@@ -13,8 +13,7 @@ import { trpc } from '@/trpc/client';
 import { toast } from 'sonner';
 
 import Link from 'next/link'
-import React, { useEffect } from 'react'
-import { ZodError } from 'zod';
+import React from 'react'
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const Page = () => {
@@ -42,8 +41,8 @@ const Page = () => {
 
   const {mutate : signIn, isLoading} = trpc.auth.signIn.useMutation({
     onSuccess : () => {
-        toast.success("Signed in successfully");
         router.refresh();
+        toast.success("Signed in successfully");
 
         if(origin){
             router.push(`/${origin}`);

@@ -6,10 +6,14 @@ import { Icons } from '../Icons/Icons';
 import NavItems from './NavItems';
 import { buttonVariants } from '../ui/button';
 import Cart from '../Cart/Cart';
+import { getServerSideUser } from '@/lib/payload-utils';
+import { cookies } from 'next/headers';
+import UserAccountNav from '../ui/UserAccountNav';
 
-const Navbar = () => {
-
-  const user = null ;
+const Navbar = async () => {
+  const nextCookies = cookies();
+  const { user } = await getServerSideUser(nextCookies);
+  
   return (
     <div className='bg-white sticky z-50 top-0 inset-x-0 h-16'>
         <header className='relative bg-white'>
@@ -28,7 +32,9 @@ const Navbar = () => {
                   <div className='ml-auto flex items-center'>
                     <div className="hidden lg:flex lg:flex-1 lg:items-center">
                       {
-                        user ? null : 
+                        user ? (
+                          <UserAccountNav user={user} />
+                        ) : 
                           <Link 
                             className={buttonVariants({variant : 'ghost'})} 
                             href="/sign-in"> 
