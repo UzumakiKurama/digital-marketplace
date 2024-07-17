@@ -1,4 +1,5 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper/MaxWidthWrapper";
+import ProductReel from "@/components/Product/ProductReel";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowDownToLine, CheckCircle, Leaf } from "lucide-react";
 import Link from "next/link";
@@ -28,7 +29,7 @@ export default function Home() {
         <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
             Your marketplace for high-quality 
-            <span className="text-blue-600"> digital assets</span>.
+            <span className="text-purple-600"> digital assets</span>.
           </h1>
           <p className="mt-6 text-lg max-w-prose text-muted-foreground">
             Your one-stop shop for all assets, fonts, the future of digital shopping is here. 
@@ -44,7 +45,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* {TODO : List Products} */}
+        <ProductReel query={{sort : "desc", limit : 4}} title="Brand new" href="/products" />
       </MaxWidthWrapper>
 
       <section className="border-t border-gray-200 bg-gray-50">
