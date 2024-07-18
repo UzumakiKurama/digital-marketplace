@@ -3,8 +3,9 @@ import ImageSlider from "@/components/ImageSlider/ImageSlider";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper/MaxWidthWrapper";
 import ProductReel from "@/components/Product/ProductReel";
 import { PRODUCT_CATEGORIES } from "@/config";
-import { getPayloadClient } from "@/get-payload";
+import { getPayloadClient } from "../../../get-payload";
 import { formatPrice } from "@/lib/utils";
+
 import { Check, Shield } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -119,7 +120,7 @@ const Page = async ({ params } : PageProps) => {
                     <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-2-lg lg:self-start">
                         <div>
                             <div className="mt-10">
-                                <AddtoCartButton />
+                                <AddtoCartButton product={product} />
                             </div>
                             <div className="mt-6 text-center">
                                 <div className="group inline-flex text-sm  text-medium">

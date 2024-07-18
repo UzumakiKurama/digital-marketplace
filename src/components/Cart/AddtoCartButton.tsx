@@ -2,11 +2,17 @@
 
 import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
+import { useCart } from '@/hooks/useCart';
+import { Product } from '@/payload-types';
 
-const AddtoCartButton = () => {
+const AddtoCartButton = ({product} : {product : Product}) => {
+    const { addItem } = useCart()
     const [isSuccess, setIsSucess] = useState(false);
 
-    const btnClickHandler = () => setIsSucess(true);
+    const btnClickHandler = () => {
+        addItem(product)
+        setIsSucess(true);
+    }
 
     useEffect(() => {
         const timeout = setTimeout(() => {

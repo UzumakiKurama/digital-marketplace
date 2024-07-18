@@ -7,19 +7,23 @@ import { getPayloadClient } from "../get-payload";
 export const appRouter = router({
     auth : authRouter,
     signUpRoute : publicProcedure.query(() => "hello"),
-    getInfiniteProducts : publicProcedure.input(z.object({
-        limit : z.number().min(1).max(100),
-        cursor : z.number().nullish(),
-        query : QueryValidator
-    })).query(async ({input}) =>{
-        const { query,cursor } = input;
+    getInfiniteProducts : publicProcedure
+    .input(    
+        z.object({
+            limit : z.number().min(1).max(100),
+            cursor : z.number().nullish(),
+            query : QueryValidator
+        })
+    )
+    .query(async ({input}) => {
+        const { query, cursor } = input;
         const { sort, limit, ...queryOpts } = query;
 
         const payload = await getPayloadClient(); 
 
-        const parsedQueryOpts : Record<
-            string, 
-            {equals : string}
+        const parsedQueryOpts: Record<
+            string,
+            { equals: string }
         > = {}
 
         Object.entries(queryOpts).forEach(([key, value]) => {
@@ -29,19 +33,23 @@ export const appRouter = router({
         })
 
         const page = cursor || 1;
-        const { docs : items, hasNextPage, nextPage } = await payload.find({
-            collection :"products",
-            where : {
-                approvedForSale : {
-                    equals : "approved",
+        const { 
+            docs : items, 
+            hasNextPage, 
+            nextPage 
+        } = await payload.find({
+                collection :"products",
+                where : {
+                    approvedForSale : {
+                        equals : "approved",
+                    },
+                    ...parsedQueryOpts
                 },
-                ...parsedQueryOpts
-            },
-            sort,
-            depth : 1,
-            limit,
-            page
-        }) 
+                sort,
+                depth : 1,
+                limit,
+                page
+            }) 
 
         return {
             items, 
