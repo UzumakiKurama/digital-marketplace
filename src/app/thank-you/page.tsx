@@ -56,7 +56,7 @@ const Page = async ({searchParams} : PageProps) => {
         <div className="hidden md:block h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:pr-4 xl:pr-12">
             <Image 
                 fill 
-                src="/assets/thank-you.gif"
+                src="/assets/thank-you.jpeg"
                 className='h-full/ w-full object-cover object-center'
                 alt="thank-you image"
                 />
