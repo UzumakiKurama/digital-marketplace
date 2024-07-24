@@ -25,7 +25,7 @@ export const Orders : CollectionConfig = {
     },
     fields : [
         {
-            name : "_isPad",
+            name : "_isPaid",
             type : "checkbox",
             access : {
                 read : ({req}) => req.user === "admin",
@@ -52,6 +52,6 @@ export const Orders : CollectionConfig = {
             relationTo : "products",
             required : true,
             hasMany : true,
-        }
-    ]
+        },
+    ],
 }

@@ -48,7 +48,7 @@ const VerifyEmail = ({token} : VerifyEmailProps) => {
                 Verifying ...
             </h3>
             <p className="text-muted-foreground text-center">
-                This won't take much time.
+                This won&apos;t take much time.
             </p>
         </div>)
     }
