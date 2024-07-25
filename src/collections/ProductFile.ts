@@ -66,7 +66,6 @@ export const ProductFiles : CollectionConfig = {
         read : yourOwnAndPurchased,
         update : ({req}) => req.user === "admin",
         delete : ({req}) => req.user === "admin"
-
     },
     upload : {
         staticURL : "/productL_files",

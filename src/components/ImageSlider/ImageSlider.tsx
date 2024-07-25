@@ -16,7 +16,7 @@ interface ImageSliderProps {
 }
 
 const ImageSlider = ({urls} : ImageSliderProps) => {
-
+    console.log(urls);
     const [swiper, setSwiper] = useState<null | SwiperType>(null)
     const [activeIndex, setActiveIndex] = useState(0);
     const [slideConfig, setSlideConfig] = useState({

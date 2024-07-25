@@ -6,6 +6,7 @@ import Providers from "@/components/Providers";
 
 import "./globals.css";
 import { Toaster } from "sonner";
+import Footer from "@/components/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
               <div className="flex-grow flex-1">
                 {children}
               </div>
+              <Footer />
             </Providers>
           </main>
 
