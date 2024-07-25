@@ -21,7 +21,6 @@ export const Orders : CollectionConfig = {
         update : ({req}) => req.user.role === "admin",
         delete : ({req}) => req.user.role === "admin",
         create : ({req}) => req.user.role === "admin",
-
     },
     fields : [
         {

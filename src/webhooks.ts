@@ -74,9 +74,9 @@ await payload.update({
     _isPaid: true,
     },
     where: {
-    id: {
-        equals: session.metadata.orderId,
-    },
+        id: {
+            equals: session.metadata.orderId,
+        },
     },
 })
 
