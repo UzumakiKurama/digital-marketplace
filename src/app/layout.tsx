@@ -13,6 +13,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Digital-marketplace",
   description: "A project for portfolio",
+  icons : './favicon.jpeg'
 };
 
 export default function RootLayout({

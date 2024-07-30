@@ -9,6 +9,7 @@ import Cart from '../Cart/Cart';
 import { getServerSideUser } from '@/lib/payload-utils';
 import { cookies } from 'next/headers';
 import UserAccountNav from '../ui/UserAccountNav';
+import Image from 'next/image';
 
 const Navbar = async () => {
   const nextCookies = cookies();
@@ -22,7 +23,7 @@ const Navbar = async () => {
                 <div className='flex h-16 items-center'>
                   <div className="ml-4 flex lg:ml-0">
                     <Link href="/">
-                      <Icons.logo />
+                      <Image src="/assets/logo.jpeg" alt='logo' width={100} height={100} />
                     </Link>
                   </div>
                   <div className='hidden z-50 lg:ml-8 lg:block lg:self-stretch'>
